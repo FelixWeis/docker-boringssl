@@ -2,7 +2,6 @@ FROM golang
 
 RUN apt-get update && apt-get install -y \
         cmake \
-        pv \
     && rm -rf /var/lib/apt/lists/* \
     && git clone https://boringssl.googlesource.com/boringssl /boringssl \
     && mkdir /boringssl/build \
@@ -11,4 +10,6 @@ RUN apt-get update && apt-get install -y \
     && make \
     && mv /boringssl/build/tool/bssl /usr/local/bin/ \
     && rm -rf /boringssl \
+    && apt-get install -y --purge --auto-remove \
+        cmake \
     && strip /usr/local/bin/bssl
